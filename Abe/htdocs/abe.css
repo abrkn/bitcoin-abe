@@ -34,3 +34,14 @@ table {
     opacity: 0.5; /* standard */
     filter: alpha(opacity = 50); /* MSIE */
 }
+
+input[name="q"] {
+    height: 40px;
+}
+
+button {
+    height: 40px;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+

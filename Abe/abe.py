@@ -1576,11 +1576,14 @@ class Abe:
         height = path_info_uint(page, None)
         if height is None:
             row = abe.store.selectrow("""
-                SELECT b.block_total_satoshis
+                SELECT b.block_total_satoshis, b.block_id
                   FROM chain c
                   LEFT JOIN block b ON (c.chain_last_block_id = b.block_id)
                  WHERE c.chain_id = ?
             """, (chain.id,))
+
+            if row and row[0] == -1:
+                return format_satoshis(row[1] * 50 * (10**8), chain) if row else 0
         else:
             row = abe.store.selectrow("""
                 SELECT b.block_total_satoshis
@@ -1870,6 +1873,7 @@ def flatten(l):
 
 def redirect(page):
     uri = wsgiref.util.request_uri(page['env'])
+    uri = uri.replace("http://zcoin.rocks", "")
     page['start_response'](
         '301 Moved Permanently',
         [('Location', uri),

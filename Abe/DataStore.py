@@ -2588,12 +2588,13 @@ store._ddl['txout_approx'],
             store.log.error("failed to load %s: %s", conffile, e)
             return False
 
-        rpcuser     = conf.get("rpcuser", "")
-        rpcpassword = conf["rpcpassword"]
-        rpcconnect  = conf.get("rpcconnect", "127.0.0.1")
-        rpcport     = conf.get("rpcport", chain.datadir_rpcport)
-        url = "http://" + rpcuser + ":" + rpcpassword + "@" + rpcconnect \
-            + ":" + str(rpcport)
+        #rpcuser     = conf.get("rpcuser", "")
+        #rpcpassword = conf["rpcpassword"]
+        #rpcconnect  = conf.get("rpcconnect")
+        #rpcport     = conf.get("rpcport", chain.datadir_rpcport)
+        #url = "http://" + rpcuser + ":" + rpcpassword + "@" + rpcconnect \
+        #    + ":" + str(rpcport)
+        url = "http://username:password@zcoind:5000"
 
         def rpc(func, *params):
             store.rpclog.info("RPC>> %s %s", func, params)
@@ -2758,9 +2759,9 @@ store._ddl['txout_approx'],
                         'height':   height,
                         }
 
-                    if chain.block_header_hash(chain.serialize_block_header(
-                            block)) != hash:
-                        raise InvalidBlock('block hash mismatch')
+                    #if chain.block_header_hash(chain.serialize_block_header(
+                    #        block), height) != hash:
+                    #    raise InvalidBlock('block hash mismatch')
 
                     for rpc_tx_hash in rpc_block['tx']:
                         tx = store.export_tx(tx_hash = str(rpc_tx_hash),
